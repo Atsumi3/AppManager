@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="spinner_all">全て</string>
+    <string name="spinner_over_26">targetAPI26以上</string>
+    <string name="spinner_manually">自分で入れたAppのみ</string>
+    <string-array name="spinner_values">
+        <item>@string/spinner_all</item>
+        <item>@string/spinner_over_26</item>
+        <item>@string/spinner_manually</item>
+    </string-array>
+</resources>

@@ -1,0 +1,23 @@
+import dependencies.Dep
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath Dep.GradlePlugin.android
+        classpath Dep.GradlePlugin.kotlin
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
