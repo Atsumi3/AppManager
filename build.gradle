@@ -8,7 +8,7 @@ buildscript {
     dependencies {
         classpath Dep.GradlePlugin.android
         classpath Dep.GradlePlugin.kotlin
-        classpath "com.dipien:releases-hub-gradle-plugin:2.0.2"
+        classpath Dep.GradlePlugin.releaseHub
     }
 }
 
@@ -31,5 +31,4 @@ releasesHub {
     baseBranch = "develop"
     pullRequestEnabled = true
     pullRequestLabels = ["needsUpdate", "needs update"]
-    gitHubWriteToken=PAT
 }

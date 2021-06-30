@@ -1,0 +1,16 @@
+name: Run auto update
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  update_dependencies:
+    if: (github.event_name == 'push' && github.event.action == 'update_dependencies')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: run auto update
+        run: ./gradlew upgradeDependencies
+        env:
+          gitHubWriteToken: ${{ secrets.APP_GITHUB_TOKEN }}
