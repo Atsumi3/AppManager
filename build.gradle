@@ -31,4 +31,7 @@ releasesHub {
     baseBranch = "develop"
     pullRequestEnabled = true
     pullRequestLabels = ["needsUpdate", "needs update"]
+    gitHubRepositoryOwner = "Atsumi3"
+    gitHubRepositoryName = "AppManager"
+    gitHubUserName = "Atsumi3"
 }
