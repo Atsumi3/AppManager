@@ -8,7 +8,7 @@ class Dep {
     }
 
     object Kotlin {
-        const val stdlibJvm = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.10"
+        const val stdlibJvm = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.20"
     }
 
     object AndroidX {
