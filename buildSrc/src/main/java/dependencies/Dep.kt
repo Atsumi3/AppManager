@@ -12,7 +12,7 @@ class Dep {
     }
 
     object AndroidX {
-        const val coreKtx = "androidx.core:core-ktx:1.1.0"
+        const val coreKtx = "androidx.core:core-ktx:1.5.0"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
         const val material = "com.google.android.material:material:1.0.0"
     }
