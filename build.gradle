@@ -31,5 +31,5 @@ releasesHub {
     baseBranch = "develop"
     pullRequestEnabled = true
     pullRequestLabels = ["needsUpdate", "needs update"]
-    githubWriteKey=PAT
+    gitHubWriteToken=PAT
 }
