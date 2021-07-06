@@ -13,7 +13,7 @@ class Dep {
 
     object AndroidX {
         const val coreKtx = "androidx.core:core-ktx:1.0.0"
-        const val material = "com.google.android.material:material:1.0.0"
+        const val material = "com.google.android.material:material:1.4.0"
     }
 
     val waveView = "com.gelitenight.waveview:waveview:1.0.0"
