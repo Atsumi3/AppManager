@@ -36,3 +36,4 @@ releasesHub {
     gitHubUserName = "github-actions[bot]"
     gitHubUserEmail = "github-actions[bot]@users.noreply.github.com"
 }
+git
