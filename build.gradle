@@ -33,5 +33,7 @@ releasesHub {
     pullRequestLabels = ["needsUpdate"]
     gitHubRepositoryOwner = "Atsumi3"
     gitHubRepositoryName = "AppManager"
+    gitHubUserName = "github-actions[bot]"
+    gitHubUserEmail = "github-actions[bot]@users.noreply.github.com"
     gitHubUserName = "Atsumi3"
 }
