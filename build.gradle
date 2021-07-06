@@ -30,10 +30,9 @@ releasesHub {
     dependenciesClassNames = ["Dep.kt"]
     baseBranch = "develop"
     pullRequestEnabled = true
-    pullRequestLabels = ["needsUpdate"]
+    pullRequestLabels = ["require update"]
     gitHubRepositoryOwner = "Atsumi3"
     gitHubRepositoryName = "AppManager"
     gitHubUserName = "github-actions[bot]"
     gitHubUserEmail = "github-actions[bot]@users.noreply.github.com"
 }
-git
