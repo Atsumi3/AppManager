@@ -2,9 +2,7 @@ package atsumi.android.appmanager.ui.app_info
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import atsumi.android.appmanager.R
 import atsumi.android.appmanager.databinding.ItemAppInfoListContentBinding
 import atsumi.android.appmanager.entity.AppInfo
 import atsumi.android.appmanager.util.DisplayCondition
@@ -40,17 +38,12 @@ class AppInfoListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ContentViewHolder(
-            DataBindingUtil.inflate(
+            ItemAppInfoListContentBinding.inflate(
                 LayoutInflater.from(parent.context),
-                R.layout.item_app_info_list_content,
                 parent,
                 false
             ),
             object : ContentViewHolder.Listener {
-                override fun onItemClick(appInfo: AppInfo) {
-                    listener?.onItemClick(appInfo)
-                }
-
                 override fun onAppUninstallClick(appInfo: AppInfo) {
                     listener?.onAppUninstallClick(appInfo)
                 }
@@ -67,8 +60,6 @@ class AppInfoListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int = displayData.size
 
     interface Listener {
-        fun onItemClick(appInfo: AppInfo)
-
         fun onAppUninstallClick(appInfo: AppInfo)
     }
 
@@ -82,10 +73,6 @@ class AppInfoListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         init {
             this.listener = object : ItemAppInfoListContentViewModel.Listener {
-                override fun onItemClick(appInfo: AppInfo) {
-                    listener.onItemClick(appInfo)
-                }
-
                 override fun onAppUninstallClick(appInfo: AppInfo) {
                     listener.onAppUninstallClick(appInfo)
                 }
@@ -93,18 +80,18 @@ class AppInfoListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
 
         fun bind(appInfo: AppInfo) {
-            if (binding.viewModel == null) {
-                binding.viewModel = ItemAppInfoListContentViewModel(appInfo).also {
-                    it.listener = listener
-                }
-            } else {
-                binding.viewModel!!.data = appInfo
+            val viewModel = ItemAppInfoListContentViewModel(appInfo)
+            binding.appName.text = viewModel.appName
+            binding.appIcon.setImageDrawable(viewModel.appIcon)
+            binding.appMinSdk.text = viewModel.minSdkText
+            binding.appTargetSdk.text = viewModel.targetSdkText
+            binding.packageName.text = viewModel.packageName
+            binding.uninstall.setOnClickListener {
+                listener.onAppUninstallClick(appInfo)
             }
         }
 
         interface Listener {
-            fun onItemClick(appInfo: AppInfo)
-
             fun onAppUninstallClick(appInfo: AppInfo)
         }
     }
