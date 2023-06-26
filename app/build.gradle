@@ -1,11 +1,12 @@
-import dependencies.Dep
-
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.kapt'
+}
 
 android {
-    compileSdkVersion 30
+    namespace 'atsumi.android.appmanager'
+    compileSdk 33
 
     defaultConfig {
         applicationId "atsumi.android.appmanager"
@@ -31,25 +32,39 @@ android {
         over30 {
             dimension "supportVersion"
             minSdkVersion 30
-            targetSdkVersion 30
+            targetSdkVersion 33
         }
     }
-
-    buildFeatures {
-        dataBinding = true
-    }
-
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.4.6'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
     }
 }
 
 dependencies {
-    implementation Dep.AndroidX.coreKtx
-    implementation Dep.AndroidX.material
-    implementation Dep.Kotlin.stdlibJvm
-    implementation "androidx.appcompat:appcompat:1.1.0"
-    implementation "androidx.preference:preference:1.1.0"
-    implementation "androidx.recyclerview:recyclerview:1.0.0"
+    implementation libs.androidx.ktx
+    implementation libs.androidx.activity.compose
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.lifecycle.runtime.ktx
+    implementation libs.material
+
+    implementation platform(libs.compose.bom)
+    implementation libs.compose.ui
+    implementation libs.compose.ui.graphics
+    implementation libs.compose.ui.tooling.preview
+    implementation libs.compose.material3
 }

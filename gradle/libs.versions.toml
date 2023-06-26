@@ -1,0 +1,25 @@
+[versions]
+kotlin = "1.8.20"
+androidGradlePlugin = "8.0.2"
+androidxActivityCompose = "1.7.2"
+androidxCoreKtx = "1.10.1"
+androidxCompose = "2023.06.01"
+androidxConstraintLayout = "2.1.4"
+androidxLifecycleRuntimeKtx = "2.6.1"
+material = "1.9.0"
+
+[libraries]
+androidx-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCoreKtx" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivityCompose" }
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidxConstraintLayout" }
+androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidxLifecycleRuntimeKtx" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "androidxCompose" }
+compose-ui = { module = "androidx.compose.ui:ui" }
+compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+compose-material3 = { module = "androidx.compose.material3:material3" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
