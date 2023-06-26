@@ -8,14 +8,12 @@ import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import atsumi.android.appmanager.R
-import atsumi.android.appmanager.databinding.ActivityAppInfoListBinding
 import atsumi.android.appmanager.entity.AppInfo
 import atsumi.android.appmanager.extensions.installedApplicationInfoList
 import atsumi.android.appmanager.extensions.showUninstallConfirmDialog
 import atsumi.android.appmanager.util.DisplayCondition
 
 class AppInfoActivity : ComponentActivity() {
-    private lateinit var binding: ActivityAppInfoListBinding
 
     private val adapter: AppInfoListAdapter by lazy {
         AppInfoListAdapter().also {
@@ -41,10 +39,9 @@ class AppInfoActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAppInfoListBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setupList(binding.list)
-        setupSpinner(binding.spinner)
+        setContentView(R.layout.activity_app_info_list)
+        setupList(findViewById(R.id.list))
+        setupSpinner(findViewById(R.id.spinner))
     }
 
     private fun setupList(list: RecyclerView) {

@@ -1,9 +1,12 @@
 package atsumi.android.appmanager.ui.app_info
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import atsumi.android.appmanager.databinding.ItemAppInfoListContentBinding
+import atsumi.android.appmanager.R
 import atsumi.android.appmanager.entity.AppInfo
 import atsumi.android.appmanager.util.DisplayCondition
 
@@ -38,8 +41,8 @@ class AppInfoListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ContentViewHolder(
-            ItemAppInfoListContentBinding.inflate(
-                LayoutInflater.from(parent.context),
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.item_app_info_list_content,
                 parent,
                 false
             ),
@@ -64,10 +67,9 @@ class AppInfoListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     class ContentViewHolder(
-        private val binding: ItemAppInfoListContentBinding,
+        root: View,
         listener: Listener
-    ) :
-        RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(root) {
 
         private val listener: ItemAppInfoListContentViewModel.Listener
 
@@ -81,14 +83,13 @@ class AppInfoListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         fun bind(appInfo: AppInfo) {
             val viewModel = ItemAppInfoListContentViewModel(appInfo)
-            binding.appName.text = viewModel.appName
-            binding.appIcon.setImageDrawable(viewModel.appIcon)
-            binding.appMinSdk.text = viewModel.minSdkText
-            binding.appTargetSdk.text = viewModel.targetSdkText
-            binding.packageName.text = viewModel.packageName
-            binding.uninstall.setOnClickListener {
-                listener.onAppUninstallClick(appInfo)
-            }
+            itemView.findViewById<TextView>(R.id.app_name).text = viewModel.appName
+            itemView.findViewById<TextView>(R.id.app_min_sdk).text = viewModel.minSdkText
+            itemView.findViewById<TextView>(R.id.app_target_sdk).text = viewModel.targetSdkText
+            itemView.findViewById<TextView>(R.id.package_name).text = viewModel.packageName
+            itemView.findViewById<ImageView>(R.id.app_icon).setImageDrawable(viewModel.appIcon)
+            itemView.findViewById<View>(R.id.uninstall)
+                .setOnClickListener { listener.onAppUninstallClick(appInfo) }
         }
 
         interface Listener {
