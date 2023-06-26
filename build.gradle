@@ -1,19 +1,4 @@
 plugins {
     id 'com.android.application' version '8.0.2' apply false
-    id 'com.android.library' version '8.0.2' apply false
     id 'org.jetbrains.kotlin.android' version '1.8.20' apply false
-    id 'com.dipien.releaseshub.gradle.plugin' version '2.0.2'
-}
-
-apply plugin: "com.dipien.releaseshub.gradle.plugin"
-
-releasesHub {
-    dependenciesBasePath = "buildSrc/src/main/java/dependencies/"
-    dependenciesClassNames = ["Dep.kt"]
-    baseBranch = "develop"
-    pullRequestEnabled = true
-    pullRequestLabels = ["needsUpdate", "needs update"]
-    gitHubRepositoryOwner = "Atsumi3"
-    gitHubRepositoryName = "AppManager"
-    gitHubUserName = "Atsumi3"
 }
