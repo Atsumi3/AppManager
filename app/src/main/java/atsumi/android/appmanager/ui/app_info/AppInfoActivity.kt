@@ -88,9 +88,11 @@ class AppInfoActivity : AppCompatActivity() {
             getString(R.string.spinner_over_26) -> {
                 adapter.displayCondition = filterOver26
             }
+
             getString(R.string.spinner_manually) -> {
                 adapter.displayCondition = filterManually
             }
+
             else -> {
                 adapter.displayCondition = null
             }
