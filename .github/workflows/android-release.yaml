@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - '*'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -37,11 +38,16 @@ jobs:
       - name: Build APK
         run: ./gradlew assemble${{ matrix.variant }}
 
+      - name: Extract APK Path
+        id: extract_apk_path
+        run: |
+          echo "apk_path=$(find app/build/outputs/apk -name '*.apk' -type f)" >> $GITHUB_OUTPUT
+
       - name: Upload APK to GitHub Packages
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.variant }}-apk
-          path: app/build/outputs/apk/${{ matrix.variant }}/app-${{ matrix.variant }}.apk
+          path: ${{ steps.extract_apk_path.outputs.apk_path }}
 
       - name: Generate QR code for APK URL
         id: generate_qr
@@ -66,6 +72,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: Update QR code URL for ${{ matrix.variant }}
+          base: develop
           branch: update-readme-${{ matrix.variant }}
           title: Update QR code URL for ${{ matrix.variant }}
           body: This PR updates the QR code URL in the README.md for ${{ matrix.variant }}.
