@@ -1,6 +1,7 @@
 package atsumi.android.appmanager.ui.app_info
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
@@ -11,26 +12,18 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Spinner
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import atsumi.android.appmanager.R
-import atsumi.android.appmanager.databinding.ActivityAppInfoListBinding
 import atsumi.android.appmanager.entity.AppInfo
 import atsumi.android.appmanager.util.DisplayCondition
 
-class AppInfoActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityAppInfoListBinding
+class AppInfoActivity : ComponentActivity() {
 
     private val adapter: AppInfoListAdapter by lazy {
         AppInfoListAdapter().also {
             it.listener = object : AppInfoListAdapter.Listener {
-                override fun onItemClick(appInfo: AppInfo) {
-
-                }
-
                 override fun onAppUninstallClick(appInfo: AppInfo) {
                     showUnInstallConfirmDialog(appInfo)
                 }
@@ -52,9 +45,9 @@ class AppInfoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_app_info_list)
-        setupList(binding.list)
-        setupSpinner(binding.spinner)
+        setContentView(R.layout.activity_app_info_list)
+        setupList(findViewById(R.id.list))
+        setupSpinner(findViewById(R.id.spinner))
     }
 
     private fun setupList(list: RecyclerView) {
@@ -121,8 +114,7 @@ class AppInfoActivity : AppCompatActivity() {
     }
 
     private val installedApplicationInfoList: List<AppInfo>
-        @SuppressLint("ObsoleteSdkInt")
-        get() {
+        @SuppressLint("ObsoleteSdkInt") get() {
             return packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
                 .mapNotNull { applicationInfo ->
                     // 自分自身は除外
