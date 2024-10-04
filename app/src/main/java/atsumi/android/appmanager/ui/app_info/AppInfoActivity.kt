@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import atsumi.android.appmanager.R
 import atsumi.android.appmanager.entity.AppInfo
+import atsumi.android.appmanager.entity.AppType
 import atsumi.android.appmanager.util.DisplayCondition
 
 class AppInfoActivity : ComponentActivity() {
@@ -39,7 +40,7 @@ class AppInfoActivity : ComponentActivity() {
 
     private val filterManually = object : DisplayCondition<AppInfo> {
         override fun isDisplayable(obj: AppInfo): Boolean {
-            return obj.appType == AppInfo.AppType.MANUALLY
+            return obj.appType == AppType.MANUALLY
         }
     }
 
@@ -124,8 +125,8 @@ class AppInfoActivity : ComponentActivity() {
 
                     val appType =
                         if (applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == ApplicationInfo.FLAG_SYSTEM) {
-                            AppInfo.AppType.SYSTEM
-                        } else AppInfo.AppType.MANUALLY
+                            AppType.SYSTEM
+                        } else AppType.MANUALLY
 
                     // パッケージの情報取得
                     val packageInfo: PackageInfo = try {
@@ -134,7 +135,7 @@ class AppInfoActivity : ComponentActivity() {
                         return@mapNotNull null
                     }
 
-                    AppInfo.from(
+                    AppInfo(
                         appName = packageManager.getApplicationLabel(applicationInfo).toString(),
                         appType = appType,
                         appIcon = packageManager.getApplicationIcon(applicationInfo),
