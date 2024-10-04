@@ -113,7 +113,6 @@ class AppInfoActivity : ComponentActivity() {
             .create().show()
     }
 
-    @Suppress("DEPRECATION")
     private val installedApplicationInfoList: List<AppInfo>
         @SuppressLint("ObsoleteSdkInt") get() {
             return packageManager.getInstalledApplications(PackageManager.GET_META_DATA)

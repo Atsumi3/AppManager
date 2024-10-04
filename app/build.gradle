@@ -2,27 +2,32 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.kapt'
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
     namespace 'atsumi.android.appmanager'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "atsumi.android.appmanager"
         versionCode 1
-        versionName "1.0"
+        versionName "0.1.0"
     }
 
     buildTypes {
-        all {
+        debug {
+            minifyEnabled false
+        }
+
+        release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
-    flavorDimensions "supportVersion"
+    flavorDimensions = ["supportVersion"]
     productFlavors {
         under29 {
             dimension "supportVersion"
@@ -32,21 +37,21 @@ android {
         over30 {
             dimension "supportVersion"
             minSdkVersion 30
-            targetSdkVersion 33
+            targetSdkVersion 34
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_19
+        targetCompatibility JavaVersion.VERSION_19
     }
     kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = '19'
     }
     buildFeatures {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.4.6'
+        kotlinCompilerExtensionVersion '1.5.15'
     }
     packagingOptions {
         resources {
