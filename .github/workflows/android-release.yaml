@@ -1,0 +1,72 @@
+name: Android Release Build
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    name: Build and Release APK
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        variant: [ over30Release, under29Release ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '19'
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build APK
+        run: ./gradlew assemble${{ matrix.variant }}
+
+      - name: Upload APK to GitHub Packages
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.variant }}-apk
+          path: app/build/outputs/apk/${{ matrix.variant }}/app-${{ matrix.variant }}.apk
+
+      - name: Generate QR code for APK URL
+        id: generate_qr
+        run: |
+          APK_URL="https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/app-${{ matrix.variant }}.apk"
+          QR_CODE_URL="https://api.qrserver.com/v1/create-qr-code/?data=${APK_URL}"
+          echo "QR_CODE_URL=${QR_CODE_URL}" >> $GITHUB_ENV
+
+      - name: Create or Update README.md with QR code URL
+        run: |
+          QR_CODE_URL=${{ env.QR_CODE_URL }}
+          sed -i "s|!\[QR Code for ${{ matrix.variant }}\](.*)|![QR Code for ${{ matrix.variant }}](${QR_CODE_URL})|g" README.md
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b update-readme-${{ matrix.variant }}
+          git add README.md
+          git commit -m "Update QR code URL for ${{ matrix.variant }}"
+          git push origin update-readme-${{ matrix.variant }}
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Update QR code URL for ${{ matrix.variant }}
+          branch: update-readme-${{ matrix.variant }}
+          title: Update QR code URL for ${{ matrix.variant }}
+          body: This PR updates the QR code URL in the README.md for ${{ matrix.variant }}.
+          labels: update, qr-code
