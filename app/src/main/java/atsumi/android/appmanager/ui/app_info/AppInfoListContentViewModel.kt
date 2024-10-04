@@ -3,8 +3,8 @@ package atsumi.android.appmanager.ui.app_info
 import android.graphics.drawable.Drawable
 import atsumi.android.appmanager.entity.AppInfo
 
-class ItemAppInfoListContentViewModel(appInfo: AppInfo) {
-    var data: AppInfo = appInfo
+class AppInfoListContentViewModel(appInfo: AppInfo) {
+    private var data: AppInfo = appInfo
 
     val packageName: String
         get() = data.packageName
@@ -19,7 +19,7 @@ class ItemAppInfoListContentViewModel(appInfo: AppInfo) {
         get() = "minSdk: ${data.minSdkVersionText}"
 
     val targetSdkText: String
-        get() = "targetSdk: ${data.targetSdkVersionText}"
+        get() = "targetSdk: ${data.targetSdkVersion}"
 
     interface Listener {
         fun onAppUninstallClick(appInfo: AppInfo)
