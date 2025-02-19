@@ -1,0 +1,8 @@
+signingConfigs {
+    release {
+        storeFile file("release.jks")
+        storePassword "appmanager.password"
+        keyAlias "appmanager"
+        keyPassword "appmanager.password"
+    }
+}

@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.Material"
+        android:theme="@style/MaterialAlertDialog.Material3"
         tools:ignore="DataExtractionRules">
         <activity
             android:name=".ui.app_info.AppInfoActivity"

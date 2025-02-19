@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.0.20"
-androidGradlePlugin = "8.7.0"
+androidGradlePlugin = "8.8.0"
 androidxActivityCompose = "1.9.2"
 androidxCoreKtx = "1.13.1"
 androidxCompose = "2024.09.03"

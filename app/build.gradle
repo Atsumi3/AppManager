@@ -9,6 +9,8 @@ android {
     namespace 'atsumi.android.appmanager'
     compileSdk 34
 
+    apply from: 'signingConfigs/release.gradle', to: android
+
     defaultConfig {
         applicationId "atsumi.android.appmanager"
         versionCode 1
@@ -23,6 +25,7 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

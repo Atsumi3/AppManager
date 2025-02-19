@@ -27,8 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +36,7 @@
             <ImageView
                 android:id="@+id/app_icon"
                 android:layout_width="48dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:importantForAccessibility="no"
                 android:padding="4dp"
                 android:scaleType="fitCenter"
@@ -74,14 +73,15 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <ImageButton
+            <Button
                 android:id="@+id/uninstall"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:contentDescription="@null"
                 android:padding="16dp"
-                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:src="@drawable/ic_close"
+                android:text="@null"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

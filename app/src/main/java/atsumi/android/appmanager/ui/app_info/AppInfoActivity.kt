@@ -1,7 +1,6 @@
 package atsumi.android.appmanager.ui.app_info
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
@@ -99,19 +98,8 @@ class AppInfoActivity : ComponentActivity() {
     }
 
     private fun showUnInstallConfirmDialog(appInfo: AppInfo) {
-        showUninstallConfirmDialog(appInfo)
-    }
-
-    private fun showUninstallConfirmDialog(appInfo: AppInfo) {
-        AlertDialog.Builder(this)
-            .setTitle("確認")
-            .setMessage(String.format("本当に %s をアンインストールしますか?", appInfo.appName))
-            .setPositiveButton("はい") { _, _ ->
-                val uri = Uri.fromParts("package", appInfo.packageName, null)
-                startActivity(Intent(Intent.ACTION_DELETE, uri))
-            }
-            .setNegativeButton("キャンセル", null)
-            .create().show()
+        val uri = Uri.fromParts("package", appInfo.packageName, null)
+        startActivity(Intent(Intent.ACTION_DELETE, uri))
     }
 
     private val installedApplicationInfoList: List<AppInfo>
