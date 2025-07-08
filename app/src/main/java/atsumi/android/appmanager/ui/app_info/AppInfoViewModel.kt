@@ -1,4 +1,4 @@
-package atsumi.android.appmanager.ui.app_info
+package atsumi.android.minimalist.ui.app_info
 
 import android.app.Application
 import android.content.pm.ApplicationInfo
@@ -8,8 +8,8 @@ import android.os.Build
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import atsumi.android.appmanager.entity.AppInfo
-import atsumi.android.appmanager.entity.AppType
+import atsumi.android.minimalist.entity.AppInfo
+import atsumi.android.minimalist.entity.AppType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

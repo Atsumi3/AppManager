@@ -1,7 +1,7 @@
-package atsumi.android.appmanager.ui.app_info
+package atsumi.android.minimalist.ui.app_info
 
 import android.graphics.drawable.Drawable
-import atsumi.android.appmanager.entity.AppInfo
+import atsumi.android.minimalist.entity.AppInfo
 
 class AppInfoListContentViewModel(appInfo: AppInfo) {
     private var data: AppInfo = appInfo

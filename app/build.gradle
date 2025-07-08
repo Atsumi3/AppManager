@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    namespace 'atsumi.android.appmanager'
+    namespace 'atsumi.android.minimalist'
     compileSdk 35
 
     apply from: 'signingConfigs/release.gradle', to: android
 
     defaultConfig {
-        applicationId "atsumi.android.appmanager"
+        applicationId "atsumi.android.minimalist"
         versionCode 1
         versionName "0.1.0"
     }

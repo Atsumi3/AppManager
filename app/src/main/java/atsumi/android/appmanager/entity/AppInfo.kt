@@ -1,4 +1,4 @@
-package atsumi.android.appmanager.entity
+package atsumi.android.minimalist.entity
 
 import android.graphics.drawable.Drawable
 import java.lang.ref.WeakReference
