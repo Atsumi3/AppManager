@@ -1,4 +1,4 @@
-package atsumi.android.appmanager.ui.app_info
+package jp.bizen.app.minimalist.ui.app_info
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import atsumi.android.appmanager.R
-import atsumi.android.appmanager.entity.AppInfo
-import atsumi.android.appmanager.util.DisplayCondition
+import jp.bizen.app.minimalist.R
+import jp.bizen.app.minimalist.entity.AppInfo
+import jp.bizen.app.minimalist.util.DisplayCondition
 
 internal class AppInfoItemCallback : DiffUtil.ItemCallback<AppInfo>() {
     override fun areItemsTheSame(oldItem: AppInfo, newItem: AppInfo): Boolean {
@@ -96,7 +96,16 @@ class AppInfoListAdapter :
             appMinSdk.text = viewModel.minSdkText
             appTargetSdk.text = viewModel.targetSdkText
             packageName.text = viewModel.packageName
-            appIcon.setImageDrawable(viewModel.appIcon)
+            
+            // Drawableの安全な取得
+            val icon = viewModel.appIcon
+            if (icon != null) {
+                appIcon.setImageDrawable(icon)
+            } else {
+                // デフォルトのアイコンを設定
+                appIcon.setImageResource(android.R.drawable.ic_menu_gallery)
+            }
+            
             uninstall.setOnClickListener { listener.onAppUninstallClick(appInfo) }
         }
 

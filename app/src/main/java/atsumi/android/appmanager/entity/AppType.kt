@@ -1,4 +1,4 @@
-package atsumi.android.appmanager.entity
+package jp.bizen.app.minimalist.entity
 
 enum class AppType {
     SYSTEM, MANUALLY

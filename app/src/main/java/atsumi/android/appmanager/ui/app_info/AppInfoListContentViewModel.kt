@@ -1,7 +1,7 @@
-package atsumi.android.appmanager.ui.app_info
+package jp.bizen.app.minimalist.ui.app_info
 
 import android.graphics.drawable.Drawable
-import atsumi.android.appmanager.entity.AppInfo
+import jp.bizen.app.minimalist.entity.AppInfo
 
 class AppInfoListContentViewModel(appInfo: AppInfo) {
     private var data: AppInfo = appInfo
@@ -12,7 +12,7 @@ class AppInfoListContentViewModel(appInfo: AppInfo) {
     val appName: String
         get() = data.appName
 
-    val appIcon: Drawable
+    val appIcon: Drawable?
         get() = data.appIcon
 
     val minSdkText: String

@@ -1,26 +1,32 @@
-package atsumi.android.appmanager.ui.app_info
+package jp.bizen.app.minimalist.ui.app_info
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ProgressBar
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import atsumi.android.appmanager.R
-import atsumi.android.appmanager.entity.AppInfo
-import atsumi.android.appmanager.entity.AppType
-import atsumi.android.appmanager.util.DisplayCondition
+import jp.bizen.app.minimalist.R
+import jp.bizen.app.minimalist.entity.AppInfo
+import jp.bizen.app.minimalist.entity.AppType
+import jp.bizen.app.minimalist.util.DisplayCondition
+import kotlinx.coroutines.launch
 
 class AppInfoActivity : ComponentActivity() {
 
+    private val viewModel: AppInfoViewModel by lazy {
+        ViewModelProvider(this)[AppInfoViewModel::class.java]
+    }
+    
     private val adapter: AppInfoListAdapter by lazy {
         AppInfoListAdapter().also {
             it.listener = object : AppInfoListAdapter.Listener {
@@ -30,6 +36,8 @@ class AppInfoActivity : ComponentActivity() {
             }
         }
     }
+    
+    private var progressBar: ProgressBar? = null
 
     private val filterOver26 = object : DisplayCondition<AppInfo> {
         override fun isDisplayable(obj: AppInfo): Boolean {
@@ -48,6 +56,8 @@ class AppInfoActivity : ComponentActivity() {
         setContentView(R.layout.activity_app_info_list)
         setupList(findViewById(R.id.list))
         setupSpinner(findViewById(R.id.spinner))
+        progressBar = findViewById(R.id.progress_bar)
+        observeViewModel()
     }
 
     private fun setupList(list: RecyclerView) {
@@ -73,7 +83,7 @@ class AppInfoActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        updateData()
+        viewModel.refreshApps()
     }
 
     private fun onFilterClicked(filterText: String) {
@@ -90,11 +100,37 @@ class AppInfoActivity : ComponentActivity() {
                 adapter.displayCondition = null
             }
         }
-        updateData()
+        // ViewModelから最新のデータを再取得
+        adapter.data = viewModel.appList.value
     }
 
-    private fun updateData() {
-        adapter.data = installedApplicationInfoList
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                // アプリリストの監視
+                launch {
+                    viewModel.appList.collect { appList ->
+                        adapter.data = appList
+                    }
+                }
+                
+                // ローディング状態の監視
+                launch {
+                    viewModel.isLoading.collect { isLoading ->
+                        progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
+                    }
+                }
+                
+                // エラー状態の監視
+                launch {
+                    viewModel.error.collect { error ->
+                        error?.let {
+                            Toast.makeText(this@AppInfoActivity, it, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun showUnInstallConfirmDialog(appInfo: AppInfo) {
@@ -102,39 +138,4 @@ class AppInfoActivity : ComponentActivity() {
         startActivity(Intent(Intent.ACTION_DELETE, uri))
     }
 
-    private val installedApplicationInfoList: List<AppInfo>
-        @SuppressLint("ObsoleteSdkInt") get() {
-            return packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
-                .mapNotNull { applicationInfo ->
-                    // 自分自身は除外
-                    if (applicationInfo.packageName == packageName) {
-                        return@mapNotNull null
-                    }
-
-                    val appType =
-                        if (applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == ApplicationInfo.FLAG_SYSTEM) {
-                            AppType.SYSTEM
-                        } else AppType.MANUALLY
-
-                    // パッケージの情報取得
-                    val packageInfo: PackageInfo = try {
-                        packageManager.getPackageInfo(applicationInfo.packageName, 0)
-                    } catch (e: PackageManager.NameNotFoundException) {
-                        return@mapNotNull null
-                    }
-
-                    AppInfo(
-                        appName = packageManager.getApplicationLabel(applicationInfo).toString(),
-                        appType = appType,
-                        appIcon = packageManager.getApplicationIcon(applicationInfo),
-                        packageName = packageInfo.packageName,
-                        minSdkVersionText = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            "${applicationInfo.minSdkVersion}"
-                        } else {
-                            "-"
-                        },
-                        targetSdkVersion = applicationInfo.targetSdkVersion
-                    )
-                }
-        }
 }
