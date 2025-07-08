@@ -90,35 +90,47 @@ fun AppInfoScreen(
         }
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        // フィルタードロップダウン
-        FilterDropdown(
-            selectedFilter = selectedFilter,
-            onFilterChanged = { selectedFilter = it }
-        )
-        
-        Spacer(modifier = Modifier.height(16.dp))
-        
-        // メインコンテンツ
-        Box(modifier = Modifier.fillMaxSize()) {
-            if (isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center)
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Minimalist") },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
                 )
-            } else {
-                LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    items(filteredAppList) { appInfo ->
-                        AppInfoCard(
-                            appInfo = appInfo,
-                            onUninstallClick = { onUninstallApp(appInfo) }
-                        )
+            )
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp)
+        ) {
+            // フィルタードロップダウン
+            FilterDropdown(
+                selectedFilter = selectedFilter,
+                onFilterChanged = { selectedFilter = it }
+            )
+            
+            Spacer(modifier = Modifier.height(16.dp))
+            
+            // メインコンテンツ
+            Box(modifier = Modifier.fillMaxSize()) {
+                if (isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                } else {
+                    LazyColumn(
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        items(filteredAppList) { appInfo ->
+                            AppInfoCard(
+                                appInfo = appInfo,
+                                onUninstallClick = { onUninstallApp(appInfo) }
+                            )
+                        }
                     }
                 }
             }
@@ -253,12 +265,17 @@ fun AppIcon(
 ) {
     val appIcon = appInfo.appIcon
     
-    if (appIcon != null) {
-        val bitmap = remember(appIcon) {
-            appIcon.toBitmap().asImageBitmap()
+    val imageBitmap = remember(appIcon) {
+        try {
+            appIcon?.toBitmap()?.asImageBitmap()
+        } catch (e: Exception) {
+            null
         }
+    }
+    
+    if (imageBitmap != null) {
         Image(
-            bitmap = bitmap,
+            bitmap = imageBitmap,
             contentDescription = "${appInfo.appName} icon",
             modifier = modifier
         )
