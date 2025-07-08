@@ -1,13 +1,11 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'org.jetbrains.kotlin.kapt'
-    alias(libs.plugins.kotlin.compose)
 }
 
 android {
     namespace 'atsumi.android.appmanager'
-    compileSdk 34
+    compileSdk 35
 
     apply from: 'signingConfigs/release.gradle', to: android
 
@@ -26,7 +24,7 @@ android {
             minifyEnabled true
             shrinkResources true
             signingConfig signingConfigs.release
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
         }
     }
 
@@ -40,21 +38,15 @@ android {
         over30 {
             dimension "supportVersion"
             minSdkVersion 30
-            targetSdkVersion 34
+            targetSdkVersion 35
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_19
-        targetCompatibility JavaVersion.VERSION_19
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = '19'
-    }
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion '1.5.15'
+        jvmTarget = '21'
     }
     packagingOptions {
         resources {
@@ -65,14 +57,8 @@ android {
 
 dependencies {
     implementation libs.androidx.ktx
-    implementation libs.androidx.activity.compose
     implementation libs.androidx.constraintlayout
     implementation libs.androidx.lifecycle.runtime.ktx
     implementation libs.material
 
-    implementation platform(libs.compose.bom)
-    implementation libs.compose.ui
-    implementation libs.compose.ui.graphics
-    implementation libs.compose.ui.tooling.preview
-    implementation libs.compose.material3
 }

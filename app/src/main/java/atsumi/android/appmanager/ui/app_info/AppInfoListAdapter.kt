@@ -96,7 +96,16 @@ class AppInfoListAdapter :
             appMinSdk.text = viewModel.minSdkText
             appTargetSdk.text = viewModel.targetSdkText
             packageName.text = viewModel.packageName
-            appIcon.setImageDrawable(viewModel.appIcon)
+            
+            // Drawableの安全な取得
+            val icon = viewModel.appIcon
+            if (icon != null) {
+                appIcon.setImageDrawable(icon)
+            } else {
+                // デフォルトのアイコンを設定
+                appIcon.setImageResource(android.R.drawable.ic_menu_gallery)
+            }
+            
             uninstall.setOnClickListener { listener.onAppUninstallClick(appInfo) }
         }
 

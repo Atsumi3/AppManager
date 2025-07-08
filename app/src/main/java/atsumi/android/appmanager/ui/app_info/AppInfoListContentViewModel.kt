@@ -12,7 +12,7 @@ class AppInfoListContentViewModel(appInfo: AppInfo) {
     val appName: String
         get() = data.appName
 
-    val appIcon: Drawable
+    val appIcon: Drawable?
         get() = data.appIcon
 
     val minSdkText: String
