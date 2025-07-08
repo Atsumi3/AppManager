@@ -1,4 +1,4 @@
-package atsumi.android.minimalist.ui.app_info
+package jp.bizen.app.minimalist.ui.app_info
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import atsumi.android.minimalist.R
-import atsumi.android.minimalist.entity.AppInfo
-import atsumi.android.minimalist.util.DisplayCondition
+import jp.bizen.app.minimalist.R
+import jp.bizen.app.minimalist.entity.AppInfo
+import jp.bizen.app.minimalist.util.DisplayCondition
 
 internal class AppInfoItemCallback : DiffUtil.ItemCallback<AppInfo>() {
     override fun areItemsTheSame(oldItem: AppInfo, newItem: AppInfo): Boolean {

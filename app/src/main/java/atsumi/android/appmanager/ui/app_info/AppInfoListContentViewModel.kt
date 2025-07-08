@@ -1,7 +1,7 @@
-package atsumi.android.minimalist.ui.app_info
+package jp.bizen.app.minimalist.ui.app_info
 
 import android.graphics.drawable.Drawable
-import atsumi.android.minimalist.entity.AppInfo
+import jp.bizen.app.minimalist.entity.AppInfo
 
 class AppInfoListContentViewModel(appInfo: AppInfo) {
     private var data: AppInfo = appInfo

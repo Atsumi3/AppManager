@@ -1,4 +1,4 @@
-package atsumi.android.minimalist.ui.app_info
+package jp.bizen.app.minimalist.ui.app_info
 
 import android.content.Intent
 import android.net.Uri
@@ -15,10 +15,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import atsumi.android.minimalist.R
-import atsumi.android.minimalist.entity.AppInfo
-import atsumi.android.minimalist.entity.AppType
-import atsumi.android.minimalist.util.DisplayCondition
+import jp.bizen.app.minimalist.R
+import jp.bizen.app.minimalist.entity.AppInfo
+import jp.bizen.app.minimalist.entity.AppType
+import jp.bizen.app.minimalist.util.DisplayCondition
 import kotlinx.coroutines.launch
 
 class AppInfoActivity : ComponentActivity() {

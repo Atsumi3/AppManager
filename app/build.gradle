@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    namespace 'atsumi.android.minimalist'
+    namespace 'jp.bizen.app.minimalist'
     compileSdk 35
 
     apply from: 'signingConfigs/release.gradle', to: android
 
     defaultConfig {
-        applicationId "atsumi.android.minimalist"
+        applicationId "jp.bizen.app.minimalist"
         versionCode 1
         versionName "0.1.0"
     }

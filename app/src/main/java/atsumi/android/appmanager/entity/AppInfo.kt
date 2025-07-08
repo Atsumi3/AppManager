@@ -1,4 +1,4 @@
-package atsumi.android.minimalist.entity
+package jp.bizen.app.minimalist.entity
 
 import android.graphics.drawable.Drawable
 import java.lang.ref.WeakReference
